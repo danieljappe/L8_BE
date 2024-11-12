@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import db from "./models";
 import eventRoutes from "./routes/eventRoutes";
 import artistRoutes from "./routes/artistRoutes";
+import userRoutes from "./routes/userRoutes";
+import eventController from "./controllers/eventController";
 
 const app = express();
 const port = 420;
@@ -11,6 +13,7 @@ app.use(express.json())
 
 app.use('/api/events', eventRoutes)
 app.use('/api/artists', artistRoutes)
+app.use('/api/users', userRoutes)
 
 db.sequelize.sync( { force: true } ).then(async () =>{
     await db.Event.bulkCreate([
@@ -58,6 +61,18 @@ db.sequelize.sync( { force: true } ).then(async () =>{
             name: 'Nutcracker Hackers',
             description: 'Nødeknækkere nedstammet fra Humlecoast Gangsters',
             spotify_link: 'www.spotify.com/nutcracker-hackers'
+        }
+    ])
+
+    await db.User.bulkCreate([
+        {
+            id: uuidv4(),
+            username: "bigD",
+            password: "password",
+            firstName: "Daniel",
+            lastName: "Jappe",
+            email: "d@gmail.com",
+            phone: "20208517"
         }
     ])
 
