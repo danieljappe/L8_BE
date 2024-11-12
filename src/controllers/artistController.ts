@@ -32,7 +32,36 @@ class ArtistController {
                 res.status(404).json({ message: 'Event not found'})
             }
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error'})
+            res.status(500).json({ error: `Internal server error: ${error}`})
+        }
+    }
+
+    async updateArtist (req: Request, res: Response) {
+        try {
+            const id = req.params.id;
+            const data = req.body;
+            const updated = await ArtistRepository.update(id ,data);
+            if (updated[0] === 1) {
+                res.status(200).json({message: 'Artist updated'})
+            } else {
+                res.status(404).json({message: 'Artist not found'})
+            }
+        } catch (error) {
+            res.status(500).json({ error: `Internal server error: ${error}`})
+        }
+    }
+
+    async deleteArtist (req: Request, res: Response) {
+        try {
+            const id = req.params.id;
+            const deleted = await ArtistRepository.delete(id);
+            if (deleted) {
+                res.status(204).send();
+            } else {
+                res.status(404).json({ message: 'Artist not found'})
+            }
+        } catch (error) {
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 

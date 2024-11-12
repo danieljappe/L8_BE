@@ -9,7 +9,7 @@ class EventController {
             const event = await EventRepository.create(data);
             res.status(200).json(event)
         } catch (error) {
-            res.status(500).json({ error: 'Failed to create event'})
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 
@@ -32,7 +32,7 @@ class EventController {
                 res.status(404).json({ message: 'Event not found'})
             }
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error'})
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 
@@ -46,8 +46,8 @@ class EventController {
             } else {
                 res.status(404).json({ message: 'Event not found'})
             }
-        } catch {
-            res.status(500).json({ error: 'Internal server error'})
+        } catch (error){
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 
@@ -71,7 +71,7 @@ class EventController {
                 res.status(404).json({ message: 'No artists found for the given event'})
             }
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error'})
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 
@@ -87,7 +87,7 @@ class EventController {
                 res.status(404).json({ message: result.message })
             }
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error'})
+            res.status(500).json({ error: `Internal server error: ${error}`})
         }
     }
 
