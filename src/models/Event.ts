@@ -1,13 +1,34 @@
-import { DataTypes, Sequelize, Model, ModelStatic } from 'sequelize';
+import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 
-export default (sequelize: Sequelize): ModelStatic<Model> => {
-    const Event = sequelize.define('Event', {
+// Define attributes for the Event model
+export interface EventAttributes {
+    id: string;
+    title: string;
+    description?: string;
+    date?: Date;
+    ticketPrice?: number;
+    eventPicture?: string;
+    published?: number;
+    billetto_eventId?: string;
+}
+
+// Add optional attributes for creating a new Event
+export interface EventCreationAttributes extends Optional<EventAttributes, 'id'> {}
+
+// Extend Model from Sequelize with Event attributes
+export interface EventModel
+    extends Model<EventAttributes, EventCreationAttributes>,
+        EventAttributes {}
+
+// Define the Event model
+export default (sequelize: Sequelize) => {
+    const Event = sequelize.define<EventModel>('Event', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        name: {
+        title: {
             type: DataTypes.STRING,
         },
         description: {

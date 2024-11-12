@@ -25,10 +25,15 @@ readdirSync(__dirname)
 
 console.log('Loaded models: ', Object.keys(db))
 
+
 Object.keys(db).forEach((modelName) => {
     if (db[modelName].associate) {
         db[modelName].associate(db);
     }
 });
+
+// Define relationships between models
+db.Event.belongsToMany(db.Artist, { through: 'EventArtist' });
+db.Artist.belongsToMany(db.Event, { through: 'EventArtist' });
 
 export default db;

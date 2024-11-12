@@ -1,7 +1,8 @@
 import express from "express";
 import { v4 as uuidv4 } from 'uuid';
-import eventRoutes from "./routes/eventRoutes";
 import db from "./models";
+import eventRoutes from "./routes/eventRoutes";
+import artistRoutes from "./routes/artistRoutes";
 
 const app = express();
 const port = 420;
@@ -9,12 +10,13 @@ const port = 420;
 app.use(express.json())
 
 app.use('/api/events', eventRoutes)
+app.use('/api/artists', artistRoutes)
 
 db.sequelize.sync( { force: true } ).then(async () =>{
     await db.Event.bulkCreate([
         {
             id: uuidv4(),
-            name: 'Music Festival',
+            title: 'Music Festival',
             description: 'A fun outdoor music festival.',
             date: new Date('2024-12-15T18:00:00'),
             ticketPrice: 50,
@@ -24,7 +26,7 @@ db.sequelize.sync( { force: true } ).then(async () =>{
         },
         {
             id: uuidv4(),
-            name: 'Art Exhibition',
+            title: 'Art Exhibition',
             description: 'A gallery showcasing local artists.',
             date: new Date('2024-11-20T15:00:00'),
             ticketPrice: 20,
@@ -34,7 +36,7 @@ db.sequelize.sync( { force: true } ).then(async () =>{
         },
         {
             id: uuidv4(),
-            name: 'Tech Conference',
+            title: 'Tech Conference',
             description: 'A conference with the latest tech trends.',
             date: new Date('2025-01-10T09:00:00'),
             ticketPrice: 100,
@@ -43,6 +45,21 @@ db.sequelize.sync( { force: true } ).then(async () =>{
             billetto_eventId: 'TC2025'
         }
     ]);
+
+    await db.Artist.bulkCreate([
+        {
+            id: uuidv4(),
+            name: 'Humlecoast Gangsters',
+            description: 'Velrygtede hustlere fra østkysten',
+            spotify_link: 'www.spotify.com/humlecoast-gangsters'
+        },
+        {
+            id: uuidv4(),
+            name: 'Nutcracker Hackers',
+            description: 'Nødeknækkere nedstammet fra Humlecoast Gangsters',
+            spotify_link: 'www.spotify.com/nutcracker-hackers'
+        }
+    ])
 
     console.log('Dummy data has been added.');
     app.listen(port, () => {
