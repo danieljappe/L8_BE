@@ -6,6 +6,7 @@ export interface EventAttributes {
     title: string;
     description?: string;
     date?: Date;
+    location: string,
     ticketPrice?: number;
     eventPicture?: string;
     published?: number;
@@ -37,6 +38,9 @@ export default (sequelize: Sequelize) => {
         },
         date: {
             type: DataTypes.DATE,
+        },
+        location: {
+            type: DataTypes.STRING,
         },
         ticketPrice: {
             type: DataTypes.INTEGER,
