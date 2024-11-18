@@ -5,4 +5,6 @@ const sequelize = new Sequelize({
     storage: '../config/L8_DB.db'
 })
 
+
+
 export default sequelize;

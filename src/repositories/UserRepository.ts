@@ -2,7 +2,7 @@ import db from "../models"
 
 const User = db.User;
 
-class UserRepository {
+export class UserRepository {
 
     async create(data: any) {
         return User.create(data);
@@ -22,6 +22,10 @@ class UserRepository {
 
     async delete(id: string) {
         return User.destroy({ where: { id } })
+    }
+
+    async deleteAll() {
+        await User.destroy({ where: {}, truncate: true });
     }
 }
 

@@ -1,15 +1,22 @@
 import express from "express";
+import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
 import db from "./models";
 import eventRoutes from "./routes/eventRoutes";
 import artistRoutes from "./routes/artistRoutes";
 import userRoutes from "./routes/userRoutes";
-import eventController from "./controllers/eventController";
 
 const app = express();
-const port = 420;
+const port = 5000;
+app.use(cors());
 
 app.use(express.json())
+
+app.use(
+    cors({
+        origin: 'http://localhost:3000', // Only allow requests from localhost:3000
+    })
+);
 
 app.use('/api/events', eventRoutes)
 app.use('/api/artists', artistRoutes)
@@ -19,9 +26,9 @@ db.sequelize.sync( { force: true } ).then(async () =>{
     await db.Event.bulkCreate([
         {
             id: uuidv4(),
-            title: 'Music Festival',
-            description: 'A fun outdoor music festival.',
-            date: new Date('2024-12-15T18:00:00'),
+            title: 'Event 1 - Sydhavnen',
+            description: 'Første event i Sydhavnen, bla bla bla.',
+            date: new Date('2024-03-23T20:00:00'),
             ticketPrice: 50,
             eventPicture: 'music_festival.jpg',
             published: 1,
@@ -29,19 +36,39 @@ db.sequelize.sync( { force: true } ).then(async () =>{
         },
         {
             id: uuidv4(),
-            title: 'Art Exhibition',
-            description: 'A gallery showcasing local artists.',
-            date: new Date('2024-11-20T15:00:00'),
-            ticketPrice: 20,
+            title: 'Event 2 - Kargo',
+            description: 'Vi elsker kargo, mega nice folk bag det.',
+            date: new Date('2024-08-03T20:00:00'),
+            ticketPrice: 60,
             eventPicture: 'art_exhibition.jpg',
             published: 1,
             billetto_eventId: 'AE2024'
         },
         {
             id: uuidv4(),
-            title: 'Tech Conference',
-            description: 'A conference with the latest tech trends.',
-            date: new Date('2025-01-10T09:00:00'),
+            title: 'Skomager Release Party',
+            description: 'Skomager kommer og laver sko.',
+            date: new Date('2024-10-11T21:00:00'),
+            ticketPrice: 100,
+            eventPicture: 'tech_conference.jpg',
+            published: 0,
+            billetto_eventId: 'TC2025'
+        },
+        {
+            id: uuidv4(),
+            title: 'Event 3 - Basement',
+            description: 'En tur i kælderen >:).',
+            date: new Date('2024-11-07T21:00:00'),
+            ticketPrice: 100,
+            eventPicture: 'tech_conference.jpg',
+            published: 0,
+            billetto_eventId: 'TC2025'
+        },
+        {
+            id: uuidv4(),
+            title: 'Event 4 - Humlecoast',
+            description: 'Homecoming til humlecoast',
+            date: new Date('2025-01-10T21:00:00'),
             ticketPrice: 100,
             eventPicture: 'tech_conference.jpg',
             published: 0,
@@ -66,7 +93,7 @@ db.sequelize.sync( { force: true } ).then(async () =>{
 
     await db.User.bulkCreate([
         {
-            id: uuidv4(),
+            id: "c3355147-122b-4764-b1e3-1d5b6eba3fe0",
             username: "bigD",
             password: "password",
             firstName: "Daniel",

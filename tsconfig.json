@@ -5,8 +5,9 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node", "jest"] // Add Jest to the types array for testing
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "__tests__/**/*.ts"],
   "exclude": ["node_modules"]
 }
