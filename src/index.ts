@@ -96,7 +96,7 @@ db.sequelize.sync( { force: true } ).then(async () =>{
         }
     ])
 
-    await db.User.bulkCreate([
+/*    await db.User.bulkCreate([
         {
             id: "c3355147-122b-4764-b1e3-1d5b6eba3fe0",
             username: "bigD",
@@ -106,7 +106,7 @@ db.sequelize.sync( { force: true } ).then(async () =>{
             email: "d@gmail.com",
             phone: "20208517"
         }
-    ])
+    ])*/
 
     console.log('Dummy data has been added.');
     app.listen(port, () => {
