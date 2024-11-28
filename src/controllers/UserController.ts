@@ -140,6 +140,28 @@ class UserController {
         }
     }
 
+    async getDashboardData(req: Request, res: Response): Promise<Response> {
+        try {
+            const user = req.body.user;
+
+            if (!user) {
+                return res.status(401).json({ message: "Unauthorized access." });
+            }
+
+            return res.status(200).json({
+                message: "Welcome to the dashboard",
+                user: {
+                    id: user.id,
+                    username: user.username,
+                },
+            });
+        } catch (error) {
+            console.error("Error fetching dashboard data:", error);
+            return res.status(500).json({ message: "Failed to fetch dashboard data." });
+        }
+    }
+
+
 }
 
 export default new UserController();

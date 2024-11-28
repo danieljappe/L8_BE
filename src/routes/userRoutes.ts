@@ -11,5 +11,6 @@ router.put('/:id', userController.updateUser)
 router.delete('/:id', userController.deleteUser)
 
 router.post('/login', asyncHandler(userController.login))
+router.get('/dashboard', asyncHandler(userController.getDashboardData))
 
 export default router;
