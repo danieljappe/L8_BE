@@ -50,6 +50,26 @@ class EventRepository {
             return { success: false, message: 'Unsuccesful' };
         }
     }
+
+    async removeArtistFromEvent(eventId: string, artistId: string){
+        try {
+            const event = await db.Event.findByPk(eventId);
+            const artist = await db.Artist.findByPk(artistId);
+
+            console.log(event)
+            console.log(artist)
+
+            if (!event || !artist) {
+                throw new Error('Event or Artist not found');
+            }
+
+            await event.removeArtist(artist);
+            return { success: true, message: 'Artist successfully removed from the event' };
+
+        } catch (error){
+            return { success: false, message: 'Unsuccesful' };
+        }
+    }
 }
 
 export default new EventRepository();

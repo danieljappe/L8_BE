@@ -1,5 +1,6 @@
 import express from "express";
 import eventController from "../controllers/eventController";
+import {authenticateJWT} from "../config/authMiddleware";
 
 const router = express.Router();
 
@@ -11,5 +12,9 @@ router.delete('/:id', eventController.deleteEvent);
 
 router.get('/:eventId/artists', eventController.getArtistsByEvent);
 router.post('/addArtist', eventController.addArtistToEvent);
+router.delete(
+    '/:eventId/artists/:artistId',
+    authenticateJWT,
+    eventController.removeArtistFromEvent);
 
 export default router;

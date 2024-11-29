@@ -22,7 +22,6 @@ export interface EventModel
         EventAttributes {}
 
 // Define the Event model
-//TODO: Update with location
 export default (sequelize: Sequelize) => {
     const Event = sequelize.define<EventModel>('Event', {
         id: {

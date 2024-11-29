@@ -91,6 +91,22 @@ class EventController {
         }
     }
 
+    async removeArtistFromEvent(req: Request, res: Response) {
+        const { eventId, artistId } = req.params;
+
+        try {
+            const result = await EventRepository.removeArtistFromEvent(eventId, artistId);
+
+            if (result!.success) {
+                res.status(200).json({ message: result!.message })
+            } else {
+                res.status(404).json({ message: result!.message })
+            }
+        } catch (error) {
+            res.status(500).json({ error: `Internal server error: ${error}`})
+        }
+    }
+
 }
 
 export default new EventController();
