@@ -34,22 +34,34 @@ class EventRepository {
         }
     }
 
-    async addArtistToEvent(eventId: string, artistId: string) {
+    async addArtistsToEvent(eventId: string, artistIds: string[]) {
         try {
             const event = await db.Event.findByPk(eventId);
-            const artist = await db.Artist.findByPk(artistId);
 
-            if (!event || !artist) {
-                throw new Error('Event or Artist not found');
+            if (!event) {
+                throw new Error('Event not found');
             }
 
-            // Use Sequelize's add method to create an association
-            await event.addArtist(artist);
-            return { success: true, message: 'Artist successfully added to the event' };
+            const results = await Promise.all(
+                artistIds.map(async (artistId) => {
+                    const artist = await db.Artist.findByPk(artistId);
+
+                    if (!artist) {
+                        return { success: false, message: `Artist with ID ${artistId} not found` };
+                    }
+
+                    await event.addArtist(artist);
+                    return { success: true, message: `Artist ${artistId} added successfully` };
+                })
+            );
+
+            return results;
         } catch (error) {
-            return { success: false, message: 'Unsuccesful' };
+            console.error('Error adding artists to event:', error);
+            throw new Error('Failed to add artists to event');
         }
     }
+
 
     async removeArtistFromEvent(eventId: string, artistId: string){
         try {

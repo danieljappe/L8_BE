@@ -75,21 +75,30 @@ class EventController {
         }
     }
 
-    async addArtistToEvent(req: Request, res: Response){
-        const { eventId, artistId } = req.body;
+    async addArtistsToEvent(req: Request, res: Response) {
+        const { eventId, artistIds } = req.body;
+
+        if (!eventId || !artistIds || !Array.isArray(artistIds)) {
+            return res.status(400).json({ message: 'Invalid request. Ensure eventId and artistIds are provided.' });
+        }
 
         try {
-            const result = await EventRepository.addArtistToEvent(eventId, artistId);
+            const results = await EventRepository.addArtistsToEvent(eventId, artistIds);
 
-            if (result.success) {
-                res.status(200).json({ message: result.message })
+            const failed = results.filter((result) => !result.success);
+            if (failed.length > 0) {
+                res.status(207).json({
+                    message: 'Some artists were not added successfully.',
+                    results,
+                });
             } else {
-                res.status(404).json({ message: result.message })
+                res.status(200).json({ message: 'All artists successfully added to the event.', results });
             }
         } catch (error) {
-            res.status(500).json({ error: `Internal server error: ${error}`})
+            res.status(500).json({ error: `Internal server error: ${error}` });
         }
     }
+
 
     async removeArtistFromEvent(req: Request, res: Response) {
         const { eventId, artistId } = req.params;
