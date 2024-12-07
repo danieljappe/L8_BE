@@ -4,6 +4,9 @@ import { generateToken } from "../config/jwtUtils";
 import UserRepository from "../repositories/UserRepository";
 import { LoginResponse } from "../types/apiResponse";
 import { UserAttributes } from "../models/User";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 class UserController {
 
@@ -142,10 +145,21 @@ class UserController {
 
     async getDashboardData(req: Request, res: Response): Promise<Response> {
         try {
-            const user = req.body.user;
+            const authHeader = req.headers.authorization;
 
-            if (!user) {
-                return res.status(401).json({ message: "Unauthorized access." });
+            if (!authHeader || !authHeader.startsWith("Bearer ")) {
+                return res.status(401).json({ message: "Unauthorized access. No token provided." });
+            }
+
+            const token = authHeader.split(" ")[1];
+
+            let user: any;
+
+            try {
+                const decoded = jwt.verify(token, JWT_SECRET);
+                user = decoded as { id: string; username: string }; // Assert expected token structure
+            } catch (error) {
+                return res.status(403).json({ message: "Invalid or expired token." });
             }
 
             return res.status(200).json({
@@ -155,6 +169,7 @@ class UserController {
                     username: user.username,
                 },
             });
+
         } catch (error) {
             console.error("Error fetching dashboard data:", error);
             return res.status(500).json({ message: "Failed to fetch dashboard data." });
