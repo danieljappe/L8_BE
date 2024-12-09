@@ -71,7 +71,20 @@ db.sequelize.sync( { force: true } ).then(async () =>{
         {
             id: uuidv4(),
             title: 'Event 4 - Humlecoast',
-            description: 'Homecoming til humlecoast',
+            description: 'Event 4: Humlecoast - Celebrating Humlebæk’s Underground Rap Scene\n' +
+                '\n' +
+                'Welcome to Event 4: Humlecoast, a tribute to the raw and unapologetic spirit of Humlebæk’s vibrant underground rap game. This event brings together the pulse of Humlebæk’s streets, the energy of its local talent, and the unique soundscapes that have defined a community rich in culture and creativity.\n' +
+                '\n' +
+                'Humlecoast Gangsters\n' +
+                'At the heart of this movement is Humlecoast Gangsters, a collective that has transformed local rap into anthems of resilience, pride, and street smarts. With tracks like "Juu Brisen", a gritty ode to coastal life, and "Shorecoast Gangsters", which perfectly captures the unity of their crew, the Gangsters have solidified their place as Humlebæk legends. Their hit "Hele Vejen" is an anthem of ambition and persistence, while the iconic "Wahtimus Prime" — the Humlecoast anthem — blends sharp lyricism with a beat that gets crowds roaring.\n' +
+                '\n' +
+                'Nutcracker Hackers\n' +
+                'Adding another layer to the Humlecoast sound is Nutcracker Hackers, a subgroup of the Humlecoast Gangsters. Known for their eccentric style and genre-defying lyrics, Nutcracker Hackers have redefined what it means to experiment with underground rap. Tracks like "GTA Demon Time" and "Mango Træet" showcase their dynamic storytelling and playful wordplay. Songs like "Spiderman til Rastalavn", with its quirky references and infectious rhythm, have become party staples. But it’s their magnum opus, "Nutcracker Enterprise", that cements their reputation as visionaries within the underground scene.\n' +
+                '\n' +
+                'The Spirit of Humlecoast\n' +
+                'This event isn’t just about music—it’s about celebrating the culture that has turned Humlebæk into a hub for creativity and underground innovation. Expect live performances, exclusive drops from both groups, and a deep dive into the stories behind the songs. Whether you’re a die-hard fan or a newcomer, Event 4: Humlecoast promises an unforgettable journey into the soul of Humlebæk’s rap game.\n' +
+                '\n' +
+                'Prepare for a night of beats, bars, and the unbreakable bond of Humlecoast.',
             date: new Date('2025-01-10T21:00:00'),
             location: 'Humlecoast',
             ticketPrice: 100,

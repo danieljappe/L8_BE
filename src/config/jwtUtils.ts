@@ -1,7 +1,7 @@
 import jwt, {TokenExpiredError} from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'defaultSecret';
-const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '1m';
+const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '1h';
 
 export const generateToken = (payload: object): string => {
     return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
