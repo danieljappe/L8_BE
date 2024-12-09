@@ -5,6 +5,7 @@ import db from "./models";
 import eventRoutes from "./routes/eventRoutes";
 import artistRoutes from "./routes/artistRoutes";
 import userRoutes from "./routes/userRoutes";
+import aboutusRoutes from "./routes/aboutusRoutes";
 
 const app = express();
 const port = 5000;
@@ -21,6 +22,7 @@ app.use(
 app.use('/api/events', eventRoutes)
 app.use('/api/artists', artistRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/about', aboutusRoutes)
 
 db.sequelize.sync( { force: true } ).then(async () =>{
     await db.Event.bulkCreate([
